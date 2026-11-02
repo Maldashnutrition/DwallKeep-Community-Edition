@@ -1,0 +1,18 @@
+# Runtime state
+*.ovpn
+*.auth
+.last_start
+.override_timestamps
+container_xauth
+vpnbook_password
+
+# GUI config
+config.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Logs
+*.log
