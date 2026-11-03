@@ -21,7 +21,7 @@ trap 'rc=$?; echo "ERROR: line $LINENO failed (rc=$rc)" >&2; exit $rc' ERR
 export DEBIAN_FRONTEND=noninteractive
 export SYSTEMD_OFFLINE=1
 
-VERSION="1.5.9-community"
+VERSION="1.0.0-community"
 
 declare -r PERSISTENT_STORE="/var/lib/multi-chain-community"
 declare -r RUNTIME_DIR="/run/multi-chain-community"
