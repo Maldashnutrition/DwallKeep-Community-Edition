@@ -235,8 +235,11 @@ setup_auth_files() {
 fetch_vpnbook_config() {
     local server="$1" outfile="$2" attempt
     local url="https://www.vpnbook.com/api/openvpn?hostname=$server&protocol=tcp443"
+
+    mkdir -p "$(dirname "$outfile")" || { err "cannot create $(dirname "$outfile")"; return 1; }
+
     for attempt in 1 2 3; do
-        if curl -fsSL --max-time 30 --connect-timeout 15 --cacert /etc/ssl/certs/ca-certificates.crt -A "Mozilla/5.0" -o "$outfile" "$url" \
+        if curl -fsSL --create-dirs --max-time 30 --connect-timeout 15 --cacert /etc/ssl/certs/ca-certificates.crt -A "Mozilla/5.0" -o "$outfile" "$url" \
            && [[ -s "$outfile" ]] && grep -qE '^remote\s+' "$outfile"; then
             return 0
         fi
@@ -1126,6 +1129,9 @@ main() {
     fi
 
     section "DwallKeep v$VERSION"
+
+    mkdir -p "$RUNTIME_DIR"
+    chmod 755 "$RUNTIME_DIR"
 
     preflight || exit 1
     trap cleanup_and_exit EXIT INT TERM HUP
